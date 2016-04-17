@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Новостной агрегатор</title>
+    <link rel="stylesheet" href="assets/lib/components-font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="assets/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/custom.css" />
+    <script src="assets/lib/angular/angular.min.js"></script>
+</head>
+<body ng-app="ngApp"  ng-controller="InputUrlCtrl">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="form">
+                <div class="searchBox">
+                    <div class="form-group {{form.$valid === false ? 'has-error' : '' }}">
+                        <div class="input-group">
+                            <input class="form-control" name="url" type="url" ng-model="url" required placeholder="Добавьте адрес RSS/XML/Atom для отслеживания" />
+                            <div class="input-group-addon fa fa-plus" ng-click="handleClick(url,form)">&nbsp;</div>
+                        </div>
+                    </div>
+                    <div class="alert alert-success text-center" ng-if="!blocks.length"> <strong>Пусто!</strong> Добавьте адрес RSS/XML/Atom для отслеживания. </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row" ng-if="blocks.length">
+        <div class="col-sm-4" ng-repeat="block in blocks">
+            <div news-block block="block" on-update="handleUpdate(block)" on-edit="handleEdit(block)" on-close="handleClose(block)" teek="teek"></div>
+        </div>
+    </div>
+</div>
+<script src="assets/js/ngApp.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-default" ng-click="showEdit = false;update(block)"><i fa class="fa fa-refresh"></i></button>
+            <button type="button" class="btn btn-default" ng-click="showEdit = !showEdit"><i fa class="fa fa-edit"></i></button>
+            <button type="button" class="btn btn-default" ng-click="close(block)"><i fa class="fa fa-close"></i></button>
+        </div>
+        {{title}}
+        <small>{{url}}</small>
+    </div>
+    <div class="panel-body">
+        <div ng-show="!showEdit">
+            <ul ng-if="items.length" class="list-unstyled">
+                <li ng-repeat="item in items">
+                    <a href="{{item.link}}">{{item.title}}</a>
+                    <small>{{item.content}}</small>
+                </li>
+            </ul>
+            <div class="alert alert-info" ng-if="!items.length"><strong>Пусто!</strong> Нет данных.</div>
+        </div>
+        <div ng-show="showEdit">
+            <form name="formEditBlock">
+                <div class="searchBox">
+                    <div class="form-group {{formEditBlock.$valid === false ? 'has-error' : '' }}">
+                        <input class="form-control" name="url" type="url" ng-model="block.url" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="radio-inline" ng-repeat="inputUpdated in [0,10,20,30]">
+                            <input type="radio" name="updated" ng-model="block.updated" value="{{inputUpdated}}" ng-checked="block.updated"> {{inputUpdated > 0 ? inputUpdated : 'Нет' }}
+                        </label>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-default btn-block" ng-click="
+                formEditBlock.$valid === true ? edit(block): '';
+                formEditBlock.$valid === true ? showEdit = !showEdit : showEdit = true"><i fa class="fa fa-edit"></i> Изменить</button>
+            </form>
+        </div>
+    </div>
+    <div class="panel-footer" ng-show="!showEdit">
+        <p>Последнее обновление: <strong>{{lastUpdate > 60 ? 'более 60' : lastUpdate}}</strong> c. назад </p>
+    </div>
+</div>

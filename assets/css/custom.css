@@ -1,0 +1,19 @@
+.searchBox {
+    margin-top: 20px;
+}
+.input-group-addon {
+    cursor: pointer;
+}
+#newsBoxes {
+    padding: 10px 0px;
+}
+.panel-heading small, .list-unstyled small{
+    display: block;
+}
+.list-unstyled li {
+    padding: 10px 5px;
+}
+.panel-body {
+    height: 400px;
+    overflow-y: scroll;
+}
