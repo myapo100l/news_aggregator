@@ -81,6 +81,6 @@ ngApp.directive('newsBlock', function($log,$http) {
             'edit': '&onEdit',
             'close': '&onClose'
         },
-        templateUrl: 'assets/js/tmpl/newsBlocks.html'
+        templateUrl: '/assets/js/tmpl/newsBlocks.html'
     };
 });
