@@ -9,3 +9,7 @@ CSS:
 JS:
 ----------------
 * [Angular 1](https://angularjs.org/)
+
+RUN:
+----------------
+* [http://localhost/index.html](http://localhost/index.html)

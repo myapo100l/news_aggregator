@@ -33,44 +33,55 @@ ngApp.controller('InputUrlCtrl', ['$scope','$log', '$interval',
             if(form.$valid === false) return false;
             if(findBlock({url : url}) !== false) return false;
             $scope.url = '';
-            $scope.blocks.unshift({url : url, updated : 0, du : 0});
+            $scope.blocks.unshift({url : url, updated : 0});
         }
     }
 ]);
 
 
-ngApp.directive('newsBlock', function($log,$http) {
+ngApp.directive('newsBlock', function($log,$http,$filter) {
     return {
         link : function(scope, element, attrs) {
+
             scope.url = '';
             scope.title = 'Нет данных...';
             scope.items = [];
             scope.showEdit = false;
-            scope.lastUpdate = 0;
+            scope.lastUpdate = $filter('date')(new Date(), 'MM.dd.yy hh:mm:ss');
+            scope.updateAt = Date.now();
             function update(block) {
                 $http.jsonp(document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=5&callback=JSON_CALLBACK&q=' + encodeURIComponent(block.url))
                     .then(function successCallback(response) {
                         try {
                             scope.title = response.data.responseData.feed.title;
                             scope.items = response.data.responseData.feed.entries;
-                            scope.block.du = Date.now();
                         }
                         catch (err) {
                             scope.title = 'Нет данных...';
                             scope.items = [];
-                            scope.block.du = 0;
                         }
                     })
             }
+
             scope.$watch(attrs.teek, function(teek) {
-                scope.lastUpdate = (scope.block.du === 0  ?  0 : Math.ceil((teek - scope.block.du) / 1000));
-                if(scope.lastUpdate && scope.block.updated && scope.block.updated == scope.lastUpdate) {
-                    update(scope.block);
+                teek = parseInt(teek);
+                if(scope.block.updated > 0 && Math.ceil((teek - scope.updateAt) / 1000) == scope.block.updated) {
+                    scope.block.du = Date.now();
                 }
             });
+            scope.$watch('block.updated', function() {
+                scope.updateAt = Date.now();
+            });
+            scope.$watch('block.du', function(du) {
+                du = parseInt(du);
+                $log.info(du);
+                scope.updateAt = du;
+                date = angular.isDefined(du) ? new Date() : new Date(du);
+                scope.lastUpdate = $filter('date')(date, 'MM.dd.yy hh:mm:ss');
+                update(scope.block);
+            })
             scope.$watch('block.url', function(url) {
                 scope.url = url ? url : scope.url;
-                update(scope.block);
             });
         },
         restrict: 'A',
