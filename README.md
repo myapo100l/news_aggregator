@@ -3,7 +3,7 @@
 
 CSS3:
 ----------------
-* [Bootstrap](http://getbootstrap.com/)
+* [Bootstrap3](http://getbootstrap.com/)
 * [Font Awesome](https://github.com/component/component)
 
 JS:
