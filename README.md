@@ -1,7 +1,7 @@
 Новостной агрегатор
 ===================
 
-CSS:
+CSS3:
 ----------------
 * [Bootstrap](http://getbootstrap.com/)
 * [Font Awesome](https://github.com/component/component)
